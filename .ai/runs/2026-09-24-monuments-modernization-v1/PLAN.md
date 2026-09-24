@@ -16,7 +16,7 @@ Engine: `om-auto-create-pr-loop`
 | 2 | 2.1 | Define and version the canonical import schema | group:B | done | 0d771d6 |
 | 2 | 2.2 | Implement validation-only reporting | group:B | done | 678c0e6 |
 | 2 | 2.3 | Implement idempotent batch persistence and checkpoints | group:B | done | c0868e7 |
-| 2 | 2.4 | Add a synthetic source-adapter fixture and report artifact | inline | todo | — |
+| 2 | 2.4 | Add a synthetic source-adapter fixture and report artifact | inline | done | eceaa99 |
 | 3 | 3.1 | Implement paginated/streamed list and detail application services | group:C | todo | — |
 | 3 | 3.2 | Build accessible list and detail pages with SSR/ISR metadata | group:C | todo | — |
 | 3 | 3.3 | Add stable canonical URL generation and change handling | inline | todo | — |
