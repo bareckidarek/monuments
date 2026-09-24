@@ -13,6 +13,7 @@ New-Item -ItemType Directory -Force -Path $ArtifactDir | Out-Null
 $Url = "$BaseUrl/catalog/$Slug?locale=$Locale"
 try {
   & $Browser --session $Session open $Url --json | Out-File "$ArtifactDir/open.json"
+  Start-Sleep -Seconds 1
   & $Browser --session $Session snapshot -i --json | Out-File "$ArtifactDir/snapshot.json"
   & $Browser --session $Session screenshot --full "$ArtifactDir/detail.png" --json | Out-File "$ArtifactDir/screenshot.json"
   $Snapshot = Get-Content "$ArtifactDir/snapshot.json" -Raw

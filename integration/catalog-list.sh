@@ -21,6 +21,7 @@ trap cleanup EXIT INT TERM
 
 mkdir -p "$ARTIFACT_DIR"
 "$BROWSER" --session "$SESSION" open "$BASE_URL/catalog" --json >"$ARTIFACT_DIR/open.json"
+sleep 1
 "$BROWSER" --session "$SESSION" snapshot -i --json >"$ARTIFACT_DIR/snapshot.json"
 "$BROWSER" --session "$SESSION" screenshot --full "$ARTIFACT_DIR/list.png" --json >"$ARTIFACT_DIR/screenshot.json"
 
