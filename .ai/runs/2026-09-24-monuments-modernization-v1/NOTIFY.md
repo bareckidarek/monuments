@@ -42,3 +42,10 @@
 - Validation passed: typecheck, 27 tests, production build, and `git diff --check`.
 - Browser verification skipped because `agent-browser` is not installed.
 - Next step: Phase 5 Step 5.1.
+
+## 2026-09-24T18:21:00Z — checkpoint 4
+- Steps covered: 5.1–5.3 (`23742d6`, `00e0037`, `c7437e1`).
+- Provider-neutral map adapter, bounded viewport markers, and loading/error/empty/compact states are complete.
+- Validation passed: typecheck, 34 tests, production build, and `git diff --check`.
+- Browser verification skipped because `agent-browser` is not installed.
+- Next step: Phase 6 Step 6.1.

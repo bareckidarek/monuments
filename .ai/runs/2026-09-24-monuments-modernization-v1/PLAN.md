@@ -25,7 +25,7 @@ Engine: `om-auto-create-pr-loop`
 | 4 | 4.3 | Connect search UI and filters to the catalog flow | inline | done | 34dba7b |
 | 5 | 5.1 | Implement the provider-neutral map adapter with Leaflet | group:E | done | 875db2c |
 | 5 | 5.2 | Implement bounded viewport marker queries | group:E | done | 0c84fa2 |
-| 5 | 5.3 | Add map failure and responsive states | inline | todo | — |
+| 5 | 5.3 | Add map failure and responsive states | inline | done | c7437e1 |
 | 6 | 6.1 | Implement image boundary validation and metadata persistence | group:F | todo | — |
 | 6 | 6.2 | Implement local filesystem storage and processing status | group:F | todo | — |
 | 6 | 6.3 | Render accessible galleries and define the S3-compatible adapter boundary | inline | todo | — |
