@@ -1,4 +1,8 @@
 :root { color-scheme: light; font-family: system-ui, sans-serif; }
 * { box-sizing: border-box; }
 body { margin: 0; color: #17202a; background: #f8fafc; }
-main { max-width: 60rem; margin: 0 auto; padding: 4rem 1.5rem; }
+main { max-width: 60rem; margin: 0 auto; padding: 2rem 1.5rem; }
+a { color: #0645ad; }
+nav { margin-bottom: 2rem; }
+li { margin: 1.25rem 0; }
+button, a { min-height: 2.75rem; }

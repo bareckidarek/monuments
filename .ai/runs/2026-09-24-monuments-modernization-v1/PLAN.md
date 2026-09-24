@@ -18,7 +18,7 @@ Engine: `om-auto-create-pr-loop`
 | 2 | 2.3 | Implement idempotent batch persistence and checkpoints | group:B | done | c0868e7 |
 | 2 | 2.4 | Add a synthetic source-adapter fixture and report artifact | inline | done | eceaa99 |
 | 3 | 3.1 | Implement paginated/streamed list and detail application services | group:C | done | 2e26468 |
-| 3 | 3.2 | Build accessible list and detail pages with SSR/ISR metadata | group:C | todo | — |
+| 3 | 3.2 | Build accessible list and detail pages with SSR/ISR metadata | group:C | done | c58f44b |
 | 3 | 3.3 | Add stable canonical URL generation and change handling | inline | todo | — |
 | 4 | 4.1 | Define the Meilisearch document mapper and index settings | group:D | todo | — |
 | 4 | 4.2 | Implement indexing after import and explicit rebuild commands | group:D | todo | — |
