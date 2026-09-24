@@ -28,3 +28,10 @@
 - Resumed by: @bareckidarek
 - Resume point: 3.2 (source: HANDOFF.md / Tasks table)
 - PR head SHA: 0187d6c
+
+## 2026-09-24T18:08:00Z — checkpoint 2
+- Steps covered: 3.2–3.3 (`34f7611`/`4251ebf` through current checkpoint).
+- Accessible catalog pages, SSR/ISR metadata, canonical URL generation, unique slugs, and alias enforcement are complete.
+- Validation passed: typecheck, 22 tests, production build, and `git diff --check`.
+- Browser verification skipped because `agent-browser` is not installed.
+- Next step: Phase 4 Step 4.1.

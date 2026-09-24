@@ -1,17 +1,17 @@
 # Handoff — 2026-09-24-monuments-modernization-v1
 
-**Last updated:** 2026-09-24T17:42:00Z
+**Last updated:** 2026-09-24T18:08:00Z
 **Branch:** feat/monuments-modernization-v1
 **PR:** https://github.com/bareckidarek/monuments/pull/1
-**Current phase/step:** Phase 3 Step 3.2
-**Last commit:** 2e26468 — feat(catalog): add paginated catalog services
+**Current phase/step:** Phase 4 Step 4.1
+**Last commit:** 4251ebf — feat(catalog): add stable canonical URLs
 
 ## What just happened
-- Completed Phase 3 Step 3.1 with bounded catalog list/detail services and paginated streaming.
-- Added region filtering, stable ordering, published-only reads, slug validation, and locale fallback coverage.
+- Completed Phase 3 Steps 3.2–3.3 with accessible SSR/ISR catalog pages, metadata, stable canonical paths, unique slug generation, and published-slug alias enforcement.
+- Checkpoint 2 validation passed; browser verification remains unavailable because `agent-browser` is not installed.
 
 ## Next concrete action
-- Build accessible list and detail pages with SSR/ISR metadata for Phase 3 Step 3.2.
+- Define the Meilisearch document mapper and index settings for Phase 4 Step 4.1.
 
 ## Blockers / open questions
 - Legacy SQL dump and schema are not available; the canonical importer is the first implementation contract.
