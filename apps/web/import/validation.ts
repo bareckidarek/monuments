@@ -46,6 +46,19 @@ export function validateCanonicalImport(input: unknown): ValidationReport {
     errors.push(...recordErrors);
     if (recordErrors.length === 0) typedRecords.push(value as CanonicalRecord);
   });
+  const duplicateLocations = new Map<string, number[]>();
+  records.forEach((value, index) => {
+    if (isObject(value) && typeof value.externalId === "string") {
+      duplicateLocations.set(value.externalId, [...(duplicateLocations.get(value.externalId) ?? []), index]);
+    }
+  });
+  for (const [externalId, locations] of duplicateLocations) {
+    if (locations.length > 1) {
+      for (const recordIndex of locations) {
+        errors.push({ code: IMPORT_ERROR_CODES.DUPLICATE_EXTERNAL_ID, message: `External ID occurs at records ${locations.join(", ")}.`, recordIndex, externalId, field: "externalId" });
+      }
+    }
+  }
   const checksumInput = { schemaVersion: input.schemaVersion, sourceNamespace, records };
   const computedChecksum = checksumForImport(checksumInput as Omit<CanonicalImport, "checksum">);
   if (typeof input.checksum !== "string" || input.checksum !== computedChecksum) {
@@ -62,15 +75,23 @@ export function validateCanonicalImport(input: unknown): ValidationReport {
   };
 }
 
+export function validationReportJson(report: ValidationReport): string {
+  return JSON.stringify({
+    ok: report.ok,
+    checksum: report.checksum,
+    validRecordCount: report.validRecordCount,
+    invalidRecordCount: report.invalidRecordCount,
+    errors: report.errors
+  }, null, 2) + "\n";
+}
+
 function validateRecord(value: unknown, index: number, seen: Map<string, number>): ImportValidationError[] {
   const errors: ImportValidationError[] = [];
   if (!isObject(value)) return [{ code: IMPORT_ERROR_CODES.INVALID_RECORD, message: "Record must be an object.", recordIndex: index }];
   const externalId = value.externalId;
   if (typeof externalId !== "string" || externalId.trim() === "") {
     errors.push({ code: IMPORT_ERROR_CODES.INVALID_EXTERNAL_ID, message: "External ID is required.", recordIndex: index, field: "externalId" });
-  } else if (seen.has(externalId)) {
-    errors.push({ code: IMPORT_ERROR_CODES.DUPLICATE_EXTERNAL_ID, message: `External ID duplicates record ${seen.get(externalId)}.`, recordIndex: index, externalId, field: "externalId" });
-  } else seen.set(externalId, index);
+  } else if (!seen.has(externalId)) seen.set(externalId, index);
   if (typeof value.slug !== "string" || !slugPattern.test(value.slug)) errors.push({ code: IMPORT_ERROR_CODES.INVALID_SLUG, message: "Slug must contain lowercase URL-safe words.", recordIndex: index, field: "slug" });
   if (!Array.isArray(value.translations)) {
     errors.push({ code: IMPORT_ERROR_CODES.MISSING_TRANSLATION, message: "At least one translation is required.", recordIndex: index, field: "translations" });
