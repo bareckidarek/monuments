@@ -19,16 +19,30 @@ export type MapTileLayerConfig = {
   maxZoom?: number;
 };
 
+export type MapPoint = { x: number; y: number };
+
 export type MapAdapter = {
   setViewport(viewport: MapViewport): void;
   setMarkers(markers: readonly MapMarker[], onSelect: (marker: MapMarker) => void): void;
+  onViewportChange(handler: (viewport: MapViewport) => void): () => void;
+  project(coordinate: MapCoordinate): MapPoint;
+  invalidateSize(): void;
   destroy(): void;
 };
 
 export type LeafletMap = {
   setView(center: [number, number], zoom?: number): void;
+  on(event: "moveend", handler: () => void): void;
+  off(event: "moveend", handler: () => void): void;
+  getBounds(): {
+    getNorth(): number;
+    getSouth(): number;
+    getEast(): number;
+    getWest(): number;
+  };
+  invalidateSize(): void;
+  latLngToContainerPoint(coordinate: [number, number]): MapPoint;
   remove(): void;
-  eachLayer(callback: (layer: unknown) => void): void;
   removeLayer(layer: unknown): void;
   addLayer(layer: unknown): void;
 };
@@ -64,7 +78,7 @@ export function createLeafletMapAdapter(
         [viewport.north, viewport.east]
       ]);
       const center = bounds.getCenter();
-      map.setView([center.lat, center.lng]);
+      map.setView([center.lat, center.lng], 6);
     },
     setMarkers(nextMarkers, onSelect) {
       for (const marker of markers) map.removeLayer(marker);
@@ -75,6 +89,25 @@ export function createLeafletMapAdapter(
         marker.addTo(map);
         return marker;
       });
+    },
+    onViewportChange(handler) {
+      const onMoveEnd = () => {
+        const bounds = map.getBounds();
+        handler({
+          north: bounds.getNorth(),
+          south: bounds.getSouth(),
+          east: bounds.getEast(),
+          west: bounds.getWest()
+        });
+      };
+      map.on("moveend", onMoveEnd);
+      return () => map.off("moveend", onMoveEnd);
+    },
+    project(coordinate) {
+      return map.latLngToContainerPoint([coordinate.latitude, coordinate.longitude]);
+    },
+    invalidateSize() {
+      map.invalidateSize();
     },
     destroy() {
       map.remove();

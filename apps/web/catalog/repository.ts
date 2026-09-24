@@ -1,4 +1,5 @@
 import type { Locale } from "../i18n/locale";
+import type { MapMarker, ViewportBounds, ViewportMarkerRepository } from "../map/viewport";
 
 export type Translation = {
   locale: Locale;
@@ -48,7 +49,7 @@ export function localize(monument: Monument, locale: Locale): Monument & { trans
   return { ...monument, translation };
 }
 
-export class InMemoryMonumentRepository implements MonumentRepository {
+export class InMemoryMonumentRepository implements MonumentRepository, ViewportMarkerRepository {
   constructor(private readonly monuments: Monument[]) {}
 
   async listPublished({ page, pageSize, locale, region }: { page: number; pageSize: number; locale: Locale; region?: string }) {
@@ -70,5 +71,30 @@ export class InMemoryMonumentRepository implements MonumentRepository {
   async findPublishedBySlug({ slug, locale }: { slug: string; locale: Locale }) {
     const monument = this.monuments.find((item) => item.slug === slug && item.isPublished);
     return monument ? localize(monument, locale) : null;
+  }
+
+  async listMarkersInViewport(bounds: ViewportBounds, limit: number): Promise<MapMarker[]> {
+    return this.monuments
+      .filter((monument) => monument.isPublished)
+      .filter(
+        (monument): monument is Monument & { latitude: number; longitude: number } =>
+          typeof monument.latitude === "number" && typeof monument.longitude === "number"
+      )
+      .filter(
+        (monument) =>
+          monument.latitude >= bounds.south &&
+          monument.latitude <= bounds.north &&
+          monument.longitude >= bounds.west &&
+          monument.longitude <= bounds.east
+      )
+      .sort((left, right) => left.slug.localeCompare(right.slug))
+      .slice(0, limit)
+      .map((monument) => ({
+        id: monument.id,
+        slug: monument.slug,
+        label: monument.translations.find((translation) => translation.locale === "pl")?.name ?? monument.slug,
+        latitude: monument.latitude,
+        longitude: monument.longitude
+      }));
   }
 }
