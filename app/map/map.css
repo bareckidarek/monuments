@@ -1,0 +1,102 @@
+.map-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #e8eef0;
+}
+
+.map-header {
+  position: absolute;
+  z-index: 1002;
+  inset: 1rem auto auto 1rem;
+  max-width: 24rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 92%);
+  box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 18%);
+}
+
+.map-header h1 { margin: 0.5rem 0 0.25rem; }
+.map-header p { margin: 0; }
+.map-header a { color: #164e63; font-weight: 700; }
+
+.map-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.map-connections {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.map-connections line {
+  stroke: #b91c1c;
+  stroke-width: 3;
+  stroke-dasharray: 8 6;
+  opacity: 0.9;
+}
+
+.map-strip {
+  position: absolute;
+  z-index: 1001;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.75rem;
+  background: rgb(15 23 42 / 88%);
+}
+
+.map-card {
+  min-width: 12rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  color: white;
+  background: #334155;
+  text-decoration: none;
+}
+
+.map-card:hover,
+.map-card:focus-visible,
+.map-card-active {
+  border-color: #fbbf24;
+  background: #475569;
+  outline: none;
+}
+
+.map-status {
+  position: absolute;
+  z-index: 1002;
+  top: 7rem;
+  left: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 94%);
+}
+
+.map-status p { margin: 0; }
+.map-status button { margin-top: 0.5rem; }
+.map-attribution {
+  position: absolute;
+  z-index: 1002;
+  right: 0.5rem;
+  bottom: 7rem;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  background: rgb(255 255 255 / 80%);
+}
+
+@media (max-width: 640px) {
+  .map-header { right: 1rem; }
+  .map-card { min-width: 10rem; }
+}
