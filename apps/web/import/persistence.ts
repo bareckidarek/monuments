@@ -97,7 +97,7 @@ export async function runImport(pool: Pool, input: unknown, batchId?: string): P
     assertBatchMatches(batch.rows[0]!, {
       schemaVersion: validation.validated.document.schemaVersion,
       sourceNamespace: validation.validated.document.sourceNamespace,
-      checksum: validation.checksum
+      checksum: validation.checksum!
     });
     await client.query("COMMIT");
     for (const [index, record] of validation.validated.document.records.entries()) {
