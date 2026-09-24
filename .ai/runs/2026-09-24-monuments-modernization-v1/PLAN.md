@@ -23,7 +23,7 @@ Engine: `om-auto-create-pr-loop`
 | 4 | 4.1 | Define the Meilisearch document mapper and index settings | group:D | done | 4f73e17 |
 | 4 | 4.2 | Implement indexing after import and explicit rebuild commands | group:D | done | d233c2c |
 | 4 | 4.3 | Connect search UI and filters to the catalog flow | inline | done | 34dba7b |
-| 5 | 5.1 | Implement the provider-neutral map adapter with Leaflet | group:E | todo | — |
+| 5 | 5.1 | Implement the provider-neutral map adapter with Leaflet | group:E | done | 875db2c |
 | 5 | 5.2 | Implement bounded viewport marker queries | group:E | todo | — |
 | 5 | 5.3 | Add map failure and responsive states | inline | todo | — |
 | 6 | 6.1 | Implement image boundary validation and metadata persistence | group:F | todo | — |
