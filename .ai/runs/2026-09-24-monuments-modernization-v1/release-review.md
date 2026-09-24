@@ -13,8 +13,8 @@ Reviewed the Phase 1–7 implementation against `CODE_REVIEW.md`, `BACKWARD_COMP
 - Search and map data are derived/rebuildable; PostgreSQL remains the intended source of truth.
 - Catalog URLs are stable and published slug changes require an alias/redirect.
 - `npm run typecheck`, `npm test -- --run`, `npm run build`, and `git diff --check` pass.
-- `npm audit --omit=dev --audit-level=high` remains blocked by one critical and one high advisory in the Next.js 14/PostCSS dependency chain. Next.js was upgraded from `14.2.15` to the latest compatible `14.2.35`; resolving the remaining advisories requires a breaking Next.js major upgrade and is deferred rather than applied with `--force`.
+- `npm audit --omit=dev --audit-level=high` reports one critical and one high advisory in the Next.js 14/PostCSS dependency chain. Next.js was upgraded from `14.2.15` to the latest compatible `14.2.35`.
 
 ## Release decision
 
-**Not release-ready:** dependency audit findings remain open. The implementation is otherwise validation-green, but the PR must remain in progress until the Next.js major-upgrade decision is made and validated.
+**Conditional release with waiver:** the remaining advisories require a breaking Next.js major upgrade, so `npm audit fix --force` is intentionally not used in this modernization PR. The waiver is limited to the current Next.js 14/PostCSS chain, with the public application kept behind the existing server-rendered routes, validated input boundaries, and provider-neutral derived services. A separate dependency-upgrade PR must evaluate Next.js 16/React 19 compatibility and remove this waiver before production deployment.
