@@ -62,3 +62,13 @@
 - Validation passed: typecheck, 46 tests, production build, and `git diff --check`.
 - Browser verification skipped because `agent-browser` is not installed.
 - Next step: Phase 7 Step 7.1.
+
+## 2026-09-24T18:55:00Z — review-fix resume
+- Resuming from final review findings on PR #1 in the isolated worktree.
+- Scope: runtime repository selection, import batch safety/recovery, stale search removal, and persisted gallery wiring.
+- Map page comment is intentionally out of scope because Steps 5.1–5.3 delivered the map adapter/query/state boundary.
+
+## 2026-09-24T19:02:00Z — review fixes complete
+- Addressed runtime repository selection, import batch identity/failure status, stale search synchronization, and persisted gallery detail wiring.
+- Validation passed: full Vitest suite, typecheck, and git diff checks.
+- PR remains in-progress for coordinator review; map-page expansion remains intentionally out of scope.
