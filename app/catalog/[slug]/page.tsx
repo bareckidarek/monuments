@@ -5,6 +5,8 @@ import { getCatalogMonument } from "../../../apps/web/catalog/services";
 import { resolveLocale } from "../../../apps/web/i18n/locale";
 import { catalogRepository } from "../../../apps/web/catalog/runtime-repository";
 import { AccessibleGallery } from "../../../apps/web/media/gallery";
+import { canonicalMonumentPath } from "../../../apps/web/catalog/urls";
+import { monumentBreadcrumbLabel } from "../../../apps/web/catalog/page-contracts";
 
 export const revalidate = 60;
 
@@ -17,7 +19,8 @@ export async function generateMetadata({ params, searchParams }: { params: Param
   if (!monument) return { title: "Monument not found | Monuments" };
   return {
     title: `${monument.translation.name} | Monuments`,
-    description: monument.translation.description ?? `Details for ${monument.translation.name}.`
+    description: monument.translation.description ?? `Details for ${monument.translation.name}.`,
+    alternates: { canonical: canonicalMonumentPath(monument) }
   };
 }
 
@@ -32,7 +35,7 @@ export default async function MonumentPage({ params, searchParams }: { params: P
 
   return (
     <main>
-      <nav aria-label={locale === "en" ? "Breadcrumb" : "Okruszki nawigacji"}><Link href={`/catalog?locale=${locale}`}>{backLabel}</Link></nav>
+      <nav aria-label={monumentBreadcrumbLabel(locale)}><Link href={`/catalog?locale=${locale}`}>{backLabel}</Link></nav>
       <article>
         <h1>{monument.translation.name}</h1>
         {resolvedNotice}

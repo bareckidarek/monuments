@@ -4,6 +4,10 @@ export function canonicalMonumentPath(monument: Pick<Monument, "slug">): string 
   return `/catalog/${encodeURIComponent(monument.slug)}`;
 }
 
+export function canonicalCatalogPath(): string {
+  return "/catalog";
+}
+
 export function createUniqueSlug(name: string, existingSlugs: Iterable<string>): string {
   const base = slugify(name);
   const used = new Set(existingSlugs);

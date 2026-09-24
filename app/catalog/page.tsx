@@ -6,6 +6,8 @@ import { catalogRepository } from "../../apps/web/catalog/runtime-repository";
 import { demoMonuments } from "../../apps/web/catalog/runtime-repository";
 import { monumentToSearchDocument } from "../../apps/web/search/mapper";
 import { searchCatalog } from "../../apps/web/search/query";
+import { catalogLabels, catalogNavigationLabel, paginationLabel } from "../../apps/web/catalog/page-contracts";
+import { canonicalCatalogPath } from "../../apps/web/catalog/urls";
 
 export const revalidate = 60;
 
@@ -13,7 +15,8 @@ type SearchParams = { locale?: string; region?: string; page?: string; q?: strin
 
 export const metadata: Metadata = {
   title: "Catalog | Monuments",
-  description: "Browse the public monument catalog."
+  description: "Browse the public monument catalog.",
+  alternates: { canonical: canonicalCatalogPath() }
 };
 
 export default async function CatalogPage({ searchParams }: { searchParams: SearchParams }) {
@@ -35,14 +38,12 @@ export default async function CatalogPage({ searchParams }: { searchParams: Sear
         pageSize: 20
       });
 
-  const labels = locale === "en"
-    ? { title: "Monument catalog", intro: "Browse published monuments.", empty: "No monuments match these filters.", details: "View details", language: "Polski" }
-    : { title: "Katalog zabytków", intro: "Przeglądaj opublikowane zabytki.", empty: "Nie znaleziono zabytków dla wybranych filtrów.", details: "Zobacz szczegóły", language: "English" };
+  const labels = catalogLabels(locale);
   const otherLocale = locale === "en" ? "pl" : "en";
 
   return (
     <main>
-      <nav aria-label={locale === "en" ? "Catalog navigation" : "Nawigacja katalogu"}>
+      <nav aria-label={catalogNavigationLabel(locale)}>
         <Link href={`/catalog?locale=${otherLocale}`}>{labels.language}</Link>
       </nav>
       <header>
@@ -53,7 +54,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Sear
           <input id="catalog-search" name="q" type="search" defaultValue={searchParams.q} />
           <input type="hidden" name="locale" value={locale} />
           {searchParams.region && <input type="hidden" name="region" value={searchParams.region} />}
-          <button type="submit">{locale === "en" ? "Search" : "Szukaj"}</button>
+          <button type="submit">{labels.search}</button>
         </form>
       </header>
       {result.items.length === 0 ? (
@@ -70,7 +71,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Sear
         </ul>
       )}
       {result.total > result.pageSize && (
-        <nav aria-label={locale === "en" ? "Pagination" : "Paginacja"}>
+        <nav aria-label={paginationLabel(locale)}>
           <p>{result.page} / {Math.ceil(result.total / result.pageSize)}</p>
           {result.page > 1 && <Link href={`/catalog?locale=${locale}&page=${result.page - 1}`}>←</Link>}
           {result.page * result.pageSize < result.total && <Link href={`/catalog?locale=${locale}&page=${result.page + 1}`}>→</Link>}
