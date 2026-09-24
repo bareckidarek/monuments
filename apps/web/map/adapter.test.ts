@@ -38,7 +38,7 @@ describe("Leaflet map adapter", () => {
       "https://tiles.example/{z}/{x}/{y}.png",
       expect.objectContaining({ attribution: "© Example" })
     );
-    expect(map.setView).toHaveBeenCalledWith([52, 20]);
+    expect(map.setView).toHaveBeenCalledWith([52, 20], 6);
     expect(leaflet.marker).toHaveBeenCalledWith([52, 20]);
     adapter.project({ latitude: 52, longitude: 20 });
     adapter.invalidateSize();
