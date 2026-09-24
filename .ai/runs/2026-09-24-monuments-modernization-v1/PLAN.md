@@ -32,7 +32,7 @@ Engine: `om-auto-create-pr-loop`
 | 7 | 7.1 | Load-test list, detail, search, and bounded map queries with approximately 10,000 monuments | dispatch:capable | done | 5f8a9cb |
 | 7 | 7.2 | Run WCAG 2.1 AA, responsive, SEO, and browser integration checks | dispatch:capable | done | 7750fcd |
 | 7 | 7.3 | Run import consistency and recovery drills | dispatch:capable | done | 8e4da79 |
-| 7 | 7.4 | Complete security and release review | inline | todo | — |
+| 7 | 7.4 | Complete security and release review | inline | done | pending |
 
 ## Goal
 
