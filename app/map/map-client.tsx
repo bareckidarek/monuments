@@ -32,23 +32,29 @@ export default function MapClient() {
   const [connection, setConnection] = useState<Connection | null>(null);
   const [line, setLine] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
   const updateConnectionRef = useRef<() => void>(() => {});
+  const requestRef = useRef<AbortController | null>(null);
 
   const loadMarkers = useCallback(async (viewport: MapViewport) => {
+    requestRef.current?.abort();
+    const request = new AbortController();
+    requestRef.current = request;
     setLoading(true);
     setError(null);
     const params = new URLSearchParams(Object.entries(viewport).map(([key, value]) => [key, String(value)]));
     try {
-      const response = await fetch(`/api/map/monuments?${params.toString()}`);
+      const response = await fetch(`/api/map/monuments?${params.toString()}`, { signal: request.signal });
       if (!response.ok) throw new Error("Map marker request failed");
       const result = (await response.json()) as { items: MapMarker[] };
+      if (request.signal.aborted) return;
       setMarkers(result.items);
       adapterRef.current?.setMarkers(result.items, setActiveMarker);
     } catch (cause) {
+      if (request.signal.aborted) return;
       setError(cause instanceof Error ? cause : new Error("Map marker request failed"));
       setMarkers([]);
       adapterRef.current?.setMarkers([], setActiveMarker);
     } finally {
-      setLoading(false);
+      if (!request.signal.aborted) setLoading(false);
     }
   }, []);
 
@@ -71,6 +77,7 @@ export default function MapClient() {
     return () => {
       disposed = true;
       unsubscribe();
+      requestRef.current?.abort();
       adapterRef.current?.destroy();
       adapterRef.current = null;
     };
