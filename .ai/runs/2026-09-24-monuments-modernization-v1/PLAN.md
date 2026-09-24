@@ -9,7 +9,7 @@ Engine: `om-auto-create-pr-loop`
 
 | Phase | Step | Title | Exec | Status | Commit |
 |---|---|---|---|---|---|
-| 1 | 1.1 | Create the Next.js modular-monolith shell and Docker Compose services | group:A | todo | — |
+| 1 | 1.1 | Create the Next.js modular-monolith shell and Docker Compose services | group:A | done | ee1c10b |
 | 1 | 1.2 | Define PostgreSQL migrations for monuments, translations, images, import batches, and import records | group:A | todo | — |
 | 1 | 1.3 | Implement locale resolution and repository services | group:A | todo | — |
 | 1 | 1.4 | Add a minimal catalog health page and CI-ready validation commands | inline | todo | — |
