@@ -11,6 +11,7 @@ export type Translation = {
 export type Monument = {
   id: string;
   slug: string;
+  region?: string | null;
   latitude?: number | null;
   longitude?: number | null;
   isPublished: boolean;
@@ -25,7 +26,7 @@ export type Page<T> = {
 };
 
 export type MonumentRepository = {
-  listPublished(input: { page: number; pageSize: number; locale: Locale }): Promise<Page<Monument>>;
+  listPublished(input: { page: number; pageSize: number; locale: Locale; region?: string }): Promise<Page<Monument>>;
   findPublishedBySlug(input: { slug: string; locale: Locale }): Promise<Monument | null>;
 };
 
@@ -40,11 +41,12 @@ export function localize(monument: Monument, locale: Locale): Monument & { trans
 export class InMemoryMonumentRepository implements MonumentRepository {
   constructor(private readonly monuments: Monument[]) {}
 
-  async listPublished({ page, pageSize, locale }: { page: number; pageSize: number; locale: Locale }) {
+  async listPublished({ page, pageSize, locale, region }: { page: number; pageSize: number; locale: Locale; region?: string }) {
     const safePage = Math.max(1, page);
     const safePageSize = Math.min(100, Math.max(1, pageSize));
     const published = this.monuments
       .filter((monument) => monument.isPublished)
+      .filter((monument) => !region || monument.region === region)
       .sort((a, b) => a.slug.localeCompare(b.slug));
     const start = (safePage - 1) * safePageSize;
     return {

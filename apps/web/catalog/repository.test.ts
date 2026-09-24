@@ -5,12 +5,14 @@ const monuments: Monument[] = [
   {
     id: "2",
     slug: "zabytek-b",
+    region: "north",
     isPublished: true,
     translations: [{ locale: "pl", name: "Zabytek B" }]
   },
   {
     id: "1",
     slug: "zabytek-a",
+    region: "south",
     isPublished: true,
     translations: [
       { locale: "pl", name: "Zabytek A" },
