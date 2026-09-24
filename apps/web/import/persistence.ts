@@ -75,9 +75,19 @@ export async function runImport(pool: Pool, input: unknown, batchId?: string): P
        ON CONFLICT (id) DO NOTHING`,
       [id, validation.validated.document.schemaVersion, validation.validated.document.sourceNamespace, validation.checksum, validation.validated.document.records.length]
     );
+    await client.query("COMMIT");
     for (const [index, record] of validation.validated.document.records.entries()) {
-      await persistRecord(client, id, validation.validated.document.sourceNamespace, record, validation.validated.recordHashes[index]);
+      await client.query("BEGIN");
+      try {
+        const applied = await persistRecord(client, id, validation.validated.document.sourceNamespace, record, validation.validated.recordHashes[index]);
+        if (applied) await client.query(`UPDATE import_batch SET imported_count = imported_count + 1 WHERE id = $1`, [id]);
+        await client.query("COMMIT");
+      } catch (error) {
+        await client.query("ROLLBACK");
+        throw error;
+      }
     }
+    await client.query("BEGIN");
     await client.query(`UPDATE import_batch SET status = 'completed', completed_at = now(), imported_count = $2 WHERE id = $1`, [id, validation.validated.document.records.length]);
     await client.query("COMMIT");
     return { ...empty, importedCount: validation.validated.document.records.length };
@@ -89,9 +99,9 @@ export async function runImport(pool: Pool, input: unknown, batchId?: string): P
   }
 }
 
-async function persistRecord(client: { query: Pool["query"] }, batchId: string, namespace: string, record: CanonicalRecord, hash: string) {
+async function persistRecord(client: { query: Pool["query"] }, batchId: string, namespace: string, record: CanonicalRecord, hash: string): Promise<boolean> {
   const prior = await client.query(`SELECT checkpoint_state FROM import_record WHERE batch_id = $1 AND source_record_hash = $2`, [batchId, hash]);
-  if (prior.rowCount) return;
+  if (prior.rowCount) return false;
   const monument = await client.query(
     `INSERT INTO monument (source_namespace, external_id, slug, latitude, longitude, region, is_published)
      VALUES ($1,$2,$3,$4,$5,$6,$7)
@@ -115,4 +125,5 @@ async function persistRecord(client: { query: Pool["query"] }, batchId: string, 
      VALUES ($1,$2,$3,'valid',$4,'applied','inserted') ON CONFLICT (batch_id, source_record_hash) DO NOTHING`,
     [batchId, hash, record.externalId, JSON.stringify(record)]
   );
+  return true;
 }
