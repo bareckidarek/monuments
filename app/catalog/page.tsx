@@ -19,21 +19,22 @@ export const metadata: Metadata = {
   alternates: { canonical: canonicalCatalogPath() }
 };
 
-export default async function CatalogPage({ searchParams }: { searchParams: SearchParams }) {
-  const locale = resolveLocale(searchParams.locale);
-  const page = Number.parseInt(searchParams.page ?? "1", 10);
+export default async function CatalogPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const resolvedSearchParams = await searchParams;
+  const locale = resolveLocale(resolvedSearchParams.locale);
+  const page = Number.parseInt(resolvedSearchParams.page ?? "1", 10);
   const pageNumber = Number.isFinite(page) && page > 0 ? page : 1;
-  const result = searchParams.q
+  const result = resolvedSearchParams.q
     ? await searchCatalog(catalogRepository, demoMonuments.map(monumentToSearchDocument), {
         locale,
-        q: searchParams.q,
-        region: searchParams.region,
+        q: resolvedSearchParams.q,
+        region: resolvedSearchParams.region,
         page: pageNumber,
         pageSize: 20
       })
     : await listCatalogMonuments(catalogRepository, {
         locale,
-        region: searchParams.region,
+        region: resolvedSearchParams.region,
         page: pageNumber,
         pageSize: 20
       });
@@ -51,9 +52,9 @@ export default async function CatalogPage({ searchParams }: { searchParams: Sear
         <p>{labels.intro}</p>
         <form method="get" role="search">
           <label htmlFor="catalog-search">{locale === "en" ? "Search" : "Szukaj"}</label>
-          <input id="catalog-search" name="q" type="search" defaultValue={searchParams.q} />
+          <input id="catalog-search" name="q" type="search" defaultValue={resolvedSearchParams.q} />
           <input type="hidden" name="locale" value={locale} />
-          {searchParams.region && <input type="hidden" name="region" value={searchParams.region} />}
+          {resolvedSearchParams.region && <input type="hidden" name="region" value={resolvedSearchParams.region} />}
           <button type="submit">{labels.search}</button>
         </form>
       </header>
