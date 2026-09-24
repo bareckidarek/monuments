@@ -1,17 +1,17 @@
 # Handoff — 2026-09-24-monuments-modernization-v1
 
-**Last updated:** 2026-09-24T18:21:00Z
+**Last updated:** 2026-09-24T18:35:00Z
 **Branch:** feat/monuments-modernization-v1
 **PR:** https://github.com/bareckidarek/monuments/pull/1
-**Current phase/step:** Phase 6 Step 6.1
-**Last commit:** c7437e1 — feat(map): add resilient viewport states
+**Current phase/step:** Phase 7 Step 7.1
+**Last commit:** be835b5 — feat(media): add accessible gallery boundary
 
 ## What just happened
-- Completed Phase 5 with provider-neutral Leaflet boundaries, bounded marker queries, and resilient map states.
-- Checkpoint 4 validation passed; browser verification remains unavailable because `agent-browser` is not installed.
+- Completed Phase 6 with image validation/metadata, safe local storage and processing transitions, and an accessible gallery/S3-compatible boundary.
+- Checkpoint 5 validation passed; browser verification remains unavailable because `agent-browser` is not installed.
 
 ## Next concrete action
-- Implement image boundary validation and metadata persistence for Phase 6 Step 6.1.
+- Run load tests for list, detail, search, and bounded map queries with approximately 10,000 monuments for Phase 7 Step 7.1.
 
 ## Blockers / open questions
 - Legacy SQL dump and schema are not available; the canonical importer is the first implementation contract.

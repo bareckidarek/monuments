@@ -49,3 +49,10 @@
 - Validation passed: typecheck, 34 tests, production build, and `git diff --check`.
 - Browser verification skipped because `agent-browser` is not installed.
 - Next step: Phase 6 Step 6.1.
+
+## 2026-09-24T18:35:00Z — checkpoint 5
+- Steps covered: 6.1–6.3 (`41ca99e`, `4377a25`, `be835b5`).
+- Image validation, safe local storage/processing, and accessible gallery/storage boundaries are complete.
+- Validation passed: typecheck, 46 tests, production build, and `git diff --check`.
+- Browser verification skipped because `agent-browser` is not installed.
+- Next step: Phase 7 Step 7.1.
