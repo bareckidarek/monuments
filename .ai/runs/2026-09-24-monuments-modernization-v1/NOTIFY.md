@@ -72,3 +72,8 @@
 - Addressed runtime repository selection, import batch identity/failure status, stale search synchronization, and persisted gallery detail wiring.
 - Validation passed: full Vitest suite, typecheck, and git diff checks.
 - PR remains in-progress for coordinator review; map-page expansion remains intentionally out of scope.
+
+## 2026-09-24T19:05:00Z — final review handoff
+- Dependency audit waiver approved: the Next.js 14/PostCSS advisories remain documented and require a separate Next.js 16/React 19 upgrade before production deployment.
+- Final validation passed: typecheck, 24 test files/59 tests, production build, and `git diff --check`.
+- GitHub rejected the formal approval because the authenticated account is the PR author. An independent reviewer must approve before the draft can be marked ready and the `in-progress` lock released.
