@@ -10,6 +10,7 @@ if (-not $Browser) { throw 'agent-browser is required; run om-prepare-test-env f
 New-Item -ItemType Directory -Force -Path $ArtifactDir | Out-Null
 try {
   & $Browser --session $Session open "$BaseUrl/catalog" --json | Out-File "$ArtifactDir/open.json"
+  Start-Sleep -Seconds 1
   & $Browser --session $Session snapshot -i --json | Out-File "$ArtifactDir/snapshot.json"
   & $Browser --session $Session screenshot --full "$ArtifactDir/list.png" --json | Out-File "$ArtifactDir/screenshot.json"
   $Snapshot = Get-Content "$ArtifactDir/snapshot.json" -Raw

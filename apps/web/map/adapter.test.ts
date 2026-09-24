@@ -6,8 +6,12 @@ describe("Leaflet map adapter", () => {
     const layers: unknown[] = [];
     const map = {
       setView: vi.fn(),
+      on: vi.fn(),
+      off: vi.fn(),
+      getBounds: vi.fn(() => ({ getNorth: () => 53, getSouth: () => 51, getEast: () => 21, getWest: () => 19 })),
+      invalidateSize: vi.fn(),
+      latLngToContainerPoint: vi.fn(() => ({ x: 10, y: 20 })),
       remove: vi.fn(),
-      eachLayer: vi.fn(),
       removeLayer: vi.fn((layer) => layers.splice(layers.indexOf(layer), 1)),
       addLayer: vi.fn((layer) => layers.push(layer))
     };
@@ -34,8 +38,11 @@ describe("Leaflet map adapter", () => {
       "https://tiles.example/{z}/{x}/{y}.png",
       expect.objectContaining({ attribution: "© Example" })
     );
-    expect(map.setView).toHaveBeenCalledWith([52, 20]);
+    expect(map.setView).toHaveBeenCalledWith([52, 20], 6);
     expect(leaflet.marker).toHaveBeenCalledWith([52, 20]);
+    adapter.project({ latitude: 52, longitude: 20 });
+    adapter.invalidateSize();
+    expect(map.invalidateSize).toHaveBeenCalled();
     adapter.destroy();
     expect(map.remove).toHaveBeenCalled();
   });
