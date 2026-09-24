@@ -13,9 +13,9 @@ Engine: `om-auto-create-pr-loop`
 | 1 | 1.2 | Define PostgreSQL migrations for monuments, translations, images, import batches, and import records | group:A | done | a3a5092 |
 | 1 | 1.3 | Implement locale resolution and repository services | group:A | done | 2dc2ba1 |
 | 1 | 1.4 | Add a minimal catalog health page and CI-ready validation commands | inline | done | 2f1ebd8 |
-| 2 | 2.1 | Define and version the canonical import schema | group:B | todo | — |
-| 2 | 2.2 | Implement validation-only reporting | group:B | todo | — |
-| 2 | 2.3 | Implement idempotent batch persistence and checkpoints | group:B | todo | — |
+| 2 | 2.1 | Define and version the canonical import schema | group:B | done | 0d771d6 |
+| 2 | 2.2 | Implement validation-only reporting | group:B | done | 678c0e6 |
+| 2 | 2.3 | Implement idempotent batch persistence and checkpoints | group:B | done | 1347a5e |
 | 2 | 2.4 | Add a synthetic source-adapter fixture and report artifact | inline | todo | — |
 | 3 | 3.1 | Implement paginated/streamed list and detail application services | group:C | todo | — |
 | 3 | 3.2 | Build accessible list and detail pages with SSR/ISR metadata | group:C | todo | — |
