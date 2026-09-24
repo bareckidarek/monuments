@@ -77,3 +77,8 @@
 - Dependency audit waiver approved: the Next.js 14/PostCSS advisories remain documented and require a separate Next.js 16/React 19 upgrade before production deployment.
 - Final validation passed: typecheck, 24 test files/59 tests, production build, and `git diff --check`.
 - GitHub rejected the formal approval because the authenticated account is the PR author. An independent reviewer must approve before the draft can be marked ready and the `in-progress` lock released.
+
+## 2026-09-24T20:47:00Z — dependency waiver resolved by PR #2
+- Next.js upgraded to 16.3.6, React and React DOM to 19.3.0, and Vitest to patched 4.1.11.
+- Next.js 16 compatibility changes were generated and validated in `tsconfig.json` and `next-env.d.ts`.
+- `npm audit --audit-level=high` and `npm audit --omit=dev --audit-level=high` both pass with zero vulnerabilities.

@@ -28,8 +28,8 @@ Upgrade the merged Monuments application to the latest stable Next.js and React 
 
 ### Phase 1: Dependency migration
 
-- [ ] 1.1 Update Next.js, React, React DOM, and React type dependencies to the latest stable compatible versions
-- [ ] 1.2 Resolve framework/compiler configuration changes and keep the lockfile consistent
+- [x] 1.1 Update Next.js, React, React DOM, and React type dependencies to the latest stable compatible versions — 7b16a5c
+- [x] 1.2 Resolve framework/compiler configuration changes and keep the lockfile consistent — 7b16a5c
 
 ### Phase 2: Compatibility validation
 
@@ -42,18 +42,20 @@ Upgrade the merged Monuments application to the latest stable Next.js and React 
 
 ## Progress
 
+PR: #2 (link: https://github.com/bareckidarek/monuments/pull/2)
+
 > Convention: `- [ ]` pending, `- [x]` done. Append ` — <commit sha>` when a step lands. Do not rename step titles.
 
 ### Phase 1: Dependency migration
 
-- [ ] 1.1 Update Next.js, React, React DOM, and React type dependencies to the latest stable compatible versions
-- [ ] 1.2 Resolve framework/compiler configuration changes and keep the lockfile consistent
+- [x] 1.1 Update Next.js, React, React DOM, and React type dependencies to the latest stable compatible versions — 7b16a5c
+- [x] 1.2 Resolve framework/compiler configuration changes and keep the lockfile consistent — 7b16a5c
 
 ### Phase 2: Compatibility validation
 
-- [ ] 2.1 Add or update regression coverage for any migration-related behavior changes
-- [ ] 2.2 Run typecheck, the full test suite, production build, and dependency audit
+- [x] 2.1 Add or update regression coverage for any migration-related behavior changes — 7b16a5c
+- [x] 2.2 Run typecheck, the full test suite, production build, and dependency audit — 7b16a5c
 
 ### Phase 3: Release documentation
 
-- [ ] 3.1 Remove the superseded dependency waiver and record the validated upgrade outcome
+- [x] 3.1 Remove the superseded dependency waiver and record the validated upgrade outcome — 7b16a5c

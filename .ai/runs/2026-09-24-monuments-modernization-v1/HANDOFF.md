@@ -3,21 +3,20 @@
 **Last updated:** 2026-09-24T18:50:00Z
 **Branch:** feat/monuments-modernization-v1
 **PR:** https://github.com/bareckidarek/monuments/pull/1
-**Current phase/step:** Phase 7 review fixes complete; independent review required
+**Current phase/step:** Dependency waiver superseded by PR #2
 **Last commit:** 5b1cb0e — chore(runs): record final review fixes
 
 ## What just happened
 - Completed all 24 implementation steps and review-fix Steps 7.5–7.7.
 - Final validation is green for typecheck, 59 tests, build, and diff checks.
-- One critical and one high production dependency advisory remain in the Next.js 14/PostCSS chain under the approved temporary waiver.
+- The Next.js 14/PostCSS dependency waiver is superseded by the validated upgrade in PR #2.
 
 ## Next concrete action
-- Have an independent GitHub reviewer review PR #1. GitHub rejects approvals submitted by the PR author; after approval, mark the PR ready, release `in-progress`, and retain the dependency waiver.
+- PR #1 is merged. PR #2 carries the dependency upgrade and must complete the normal independent review before merge.
 
 ## Blockers / open questions
 - Legacy SQL dump and schema are not available; the canonical importer is the first implementation contract.
-- The dependency audit waiver is limited to this PR; production deployment requires a separately validated Next.js 16/React 19 upgrade.
-- The implementation validation gate is green, but the automation cannot submit a formal approval because the authenticated account is the PR author.
+- The dependency audit is clean after PR #2's Next.js 16, React 19, and patched Vitest upgrades.
 
 ## Environment caveats
 - Dev runtime runnable: yes
