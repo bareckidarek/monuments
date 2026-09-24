@@ -35,3 +35,10 @@
 - Validation passed: typecheck, 22 tests, production build, and `git diff --check`.
 - Browser verification skipped because `agent-browser` is not installed.
 - Next step: Phase 4 Step 4.1.
+
+## 2026-09-24T18:12:00Z — checkpoint 3
+- Steps covered: 4.1–4.3 (`4f73e17`, `d233c2c`, `34dba7b`).
+- Search mapping/indexing, explicit rebuilds, and catalog search/filter UI are complete.
+- Validation passed: typecheck, 27 tests, production build, and `git diff --check`.
+- Browser verification skipped because `agent-browser` is not installed.
+- Next step: Phase 5 Step 5.1.
