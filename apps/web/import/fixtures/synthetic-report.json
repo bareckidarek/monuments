@@ -1,0 +1,12 @@
+{
+  "sourceNamespace": "synthetic-legacy",
+  "sourceRecordCount": 2,
+  "transformedRecordCount": 1,
+  "skippedRecordCount": 1,
+  "skipped": [
+    {
+      "legacyId": "legacy-2",
+      "reason": "missing legacyId or Polish name"
+    }
+  ]
+}
