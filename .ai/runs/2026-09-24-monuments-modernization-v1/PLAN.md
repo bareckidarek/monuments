@@ -26,8 +26,8 @@ Engine: `om-auto-create-pr-loop`
 | 5 | 5.1 | Implement the provider-neutral map adapter with Leaflet | group:E | done | 875db2c |
 | 5 | 5.2 | Implement bounded viewport marker queries | group:E | done | 0c84fa2 |
 | 5 | 5.3 | Add map failure and responsive states | inline | done | c7437e1 |
-| 6 | 6.1 | Implement image boundary validation and metadata persistence | group:F | done | 5e4d8cf |
-| 6 | 6.2 | Implement local filesystem storage and processing status | group:F | todo | — |
+| 6 | 6.1 | Implement image boundary validation and metadata persistence | group:F | done | 41ca99e |
+| 6 | 6.2 | Implement local filesystem storage and processing status | group:F | done | 0000000 |
 | 6 | 6.3 | Render accessible galleries and define the S3-compatible adapter boundary | inline | todo | — |
 | 7 | 7.1 | Load-test list, detail, search, and bounded map queries with approximately 10,000 monuments | dispatch:capable | todo | — |
 | 7 | 7.2 | Run WCAG 2.1 AA, responsive, SEO, and browser integration checks | dispatch:capable | todo | — |
