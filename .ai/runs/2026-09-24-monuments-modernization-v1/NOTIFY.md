@@ -50,6 +50,12 @@
 - Browser verification skipped because `agent-browser` is not installed.
 - Next step: Phase 6 Step 6.1.
 
+## 2026-09-24T18:50:00Z — final gate
+- All 24 Tasks rows are done.
+- Typecheck, 54 tests, production build, and diff checks passed.
+- Integration/browser checks skipped because no runner/test environment exists and `agent-browser` is unavailable.
+- Release remains blocked by one critical and one high `npm audit` advisory in the Next.js 14/PostCSS chain after the compatible Next.js patch upgrade.
+
 ## 2026-09-24T18:35:00Z — checkpoint 5
 - Steps covered: 6.1–6.3 (`41ca99e`, `4377a25`, `be835b5`).
 - Image validation, safe local storage/processing, and accessible gallery/storage boundaries are complete.

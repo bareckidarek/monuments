@@ -1,17 +1,18 @@
 # Handoff — 2026-09-24-monuments-modernization-v1
 
-**Last updated:** 2026-09-24T18:35:00Z
+**Last updated:** 2026-09-24T18:50:00Z
 **Branch:** feat/monuments-modernization-v1
 **PR:** https://github.com/bareckidarek/monuments/pull/1
-**Current phase/step:** Phase 7 Step 7.1
-**Last commit:** be835b5 — feat(media): add accessible gallery boundary
+**Current phase/step:** Phase 7 complete; final review blocked
+**Last commit:** f41afdd — chore(security): review release readiness
 
 ## What just happened
-- Completed Phase 6 with image validation/metadata, safe local storage and processing transitions, and an accessible gallery/S3-compatible boundary.
-- Checkpoint 5 validation passed; browser verification remains unavailable because `agent-browser` is not installed.
+- Completed all 24 implementation steps through Phase 7 Step 7.4.
+- Final validation is green for typecheck, 54 tests, build, and diff checks.
+- Release is blocked by one critical and one high production dependency advisory in the Next.js 14/PostCSS chain.
 
 ## Next concrete action
-- Run load tests for list, detail, search, and bounded map queries with approximately 10,000 monuments for Phase 7 Step 7.1.
+- Resolve the Next.js major-upgrade decision, rerun audit and final gate, then run the authoritative PR review.
 
 ## Blockers / open questions
 - Legacy SQL dump and schema are not available; the canonical importer is the first implementation contract.
