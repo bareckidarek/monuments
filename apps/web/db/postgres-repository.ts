@@ -1,8 +1,9 @@
 import type { Pool } from "pg";
 import type { Locale } from "../i18n/locale";
 import type { Monument, MonumentRepository, Page, Translation } from "../catalog/repository";
+import type { MapMarker, ViewportBounds, ViewportMarkerRepository } from "../map/viewport";
 
-export class PostgresMonumentRepository implements MonumentRepository {
+export class PostgresMonumentRepository implements MonumentRepository, ViewportMarkerRepository {
   constructor(private readonly pool: Pool) {}
 
   async listPublished({ page, pageSize, region }: { page: number; pageSize: number; locale: Locale; region?: string }): Promise<Page<Monument>> {
@@ -45,6 +46,28 @@ export class PostgresMonumentRepository implements MonumentRepository {
       [slug]
     );
     return result.rows[0] ? toMonument(result.rows[0]) : null;
+  }
+
+  async listMarkersInViewport(bounds: ViewportBounds, limit: number): Promise<MapMarker[]> {
+    const result = await this.pool.query(
+      `SELECT m.id, m.slug, m.latitude, m.longitude, t.name
+         FROM monument m
+         JOIN monument_translation t ON t.monument_id = m.id AND t.locale = 'pl'
+        WHERE m.is_published
+          AND m.latitude IS NOT NULL AND m.longitude IS NOT NULL
+          AND m.latitude BETWEEN $1 AND $2
+          AND m.longitude BETWEEN $3 AND $4
+        ORDER BY m.slug
+        LIMIT $5`,
+      [bounds.south, bounds.north, bounds.west, bounds.east, limit]
+    );
+    return result.rows.map((row) => ({
+      id: String(row.id),
+      slug: String(row.slug),
+      label: String(row.name),
+      latitude: Number(row.latitude),
+      longitude: Number(row.longitude)
+    }));
   }
 }
 
