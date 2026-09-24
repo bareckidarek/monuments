@@ -1,4 +1,6 @@
 import { InMemoryMonumentRepository, type Monument } from "./repository";
+import { Pool } from "pg";
+import { PostgresMonumentRepository } from "../db/postgres-repository";
 
 export const demoMonuments: Monument[] = [
   {
@@ -41,4 +43,17 @@ export const demoMonuments: Monument[] = [
   }
 ];
 
-export const catalogRepository = new InMemoryMonumentRepository([...demoMonuments]);
+type RuntimeRepositoryOptions = {
+  databaseUrl?: string;
+  createPool?: (connectionString: string) => Pool;
+};
+
+export function createCatalogRepository({
+  databaseUrl = process.env.DATABASE_URL,
+  createPool = (connectionString) => new Pool({ connectionString })
+}: RuntimeRepositoryOptions = {}) {
+  if (databaseUrl) return new PostgresMonumentRepository(createPool(databaseUrl));
+  return new InMemoryMonumentRepository([...demoMonuments]);
+}
+
+export const catalogRepository = createCatalogRepository();
