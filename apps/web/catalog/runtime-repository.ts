@@ -1,6 +1,6 @@
 import { InMemoryMonumentRepository, type Monument } from "./repository";
 
-const demoMonuments: Monument[] = [
+export const demoMonuments: Monument[] = [
   {
     id: "demo-1",
     slug: "brama-brandenburska",
