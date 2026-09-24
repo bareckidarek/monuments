@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getCatalogMonument } from "../../../apps/web/catalog/services";
 import { resolveLocale } from "../../../apps/web/i18n/locale";
 import { catalogRepository } from "../../../apps/web/catalog/runtime-repository";
+import { AccessibleGallery } from "../../../apps/web/media/gallery";
 
 export const revalidate = 60;
 
@@ -37,6 +38,7 @@ export default async function MonumentPage({ params, searchParams }: { params: P
         {resolvedNotice}
         {monument.translation.address && <p><strong>{locale === "en" ? "Address" : "Adres"}:</strong> {monument.translation.address}</p>}
         {monument.translation.description && <p>{monument.translation.description}</p>}
+        <AccessibleGallery images={[]} locale={locale} />
         {monument.latitude != null && monument.longitude != null && (
           <p>{locale === "en" ? "Coordinates" : "Współrzędne"}: {monument.latitude}, {monument.longitude}</p>
         )}
