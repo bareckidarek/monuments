@@ -33,6 +33,8 @@ Engine: `om-auto-create-pr-loop`
 | 7 | 7.2 | Run WCAG 2.1 AA, responsive, SEO, and browser integration checks | dispatch:capable | done | 7750fcd |
 | 7 | 7.3 | Run import consistency and recovery drills | dispatch:capable | done | 8e4da79 |
 | 7 | 7.4 | Complete security and release review | inline | done | f41afdd |
+| 7 | 7.5 | Fix final review runtime and import safety findings | inline | done | 8d77032, f367179, bccf498 |
+| 7 | 7.6 | Remove stale search documents during synchronization | inline | done | pending |
 
 ## Goal
 

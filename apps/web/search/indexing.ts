@@ -4,6 +4,7 @@ import type { Monument } from "../catalog/repository";
 export type SearchIndexAdapter = {
   configure(indexName: string, settings: SearchIndexSettings): Promise<void>;
   upsertDocuments(indexName: string, documents: SearchDocument[]): Promise<void>;
+  synchronizeDocuments(indexName: string, documents: SearchDocument[]): Promise<void>;
   clearDocuments(indexName: string): Promise<void>;
 };
 
@@ -23,8 +24,9 @@ export async function indexAfterImport(
 
 export async function rebuildSearchIndex(adapter: SearchIndexAdapter, source: MonumentSearchSource): Promise<{ indexedCount: number }> {
   await adapter.configure(MONUMENTS_INDEX, monumentIndexSettings);
-  await adapter.clearDocuments(MONUMENTS_INDEX);
-  return indexAfterImport(adapter, await source.listAll());
+  const documents = (await source.listAll()).filter((monument) => monument.isPublished).map(monumentToSearchDocument);
+  await adapter.synchronizeDocuments(MONUMENTS_INDEX, documents);
+  return { indexedCount: documents.length };
 }
 
 export class InMemorySearchIndex implements SearchIndexAdapter {
@@ -41,6 +43,14 @@ export class InMemorySearchIndex implements SearchIndexAdapter {
     if (!this.settings.has(indexName)) throw new Error(`Index ${indexName} is not configured`);
     for (const document of documents) this.documents.set(document.id, document);
     this.operations.push(`upsert:${indexName}:${documents.length}`);
+  }
+
+  async synchronizeDocuments(indexName: string, documents: SearchDocument[]) {
+    if (!this.settings.has(indexName)) throw new Error(`Index ${indexName} is not configured`);
+    const next = new Map(documents.map((document) => [document.id, document]));
+    this.documents.clear();
+    for (const [id, document] of next) this.documents.set(id, document);
+    this.operations.push(`synchronize:${indexName}:${documents.length}`);
   }
 
   async clearDocuments(indexName: string) {

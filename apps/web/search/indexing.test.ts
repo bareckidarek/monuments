@@ -31,9 +31,7 @@ describe("search indexing commands", () => {
       "configure:monuments",
       "upsert:monuments:1",
       "configure:monuments",
-      "clear:monuments",
-      "configure:monuments",
-      "upsert:monuments:1"
+      "synchronize:monuments:1"
     ]);
   });
 
@@ -43,5 +41,14 @@ describe("search indexing commands", () => {
     await indexAfterImport(index, [monument("2", "Two")]);
     expect([...index.documents.keys()]).toEqual(["1", "2"]);
     expect(index.operations).not.toContain("clear:monuments");
+  });
+
+  it("removes unpublished and stale documents during synchronization", async () => {
+    const index = new InMemorySearchIndex();
+    await indexAfterImport(index, [monument("stale", "Stale")]);
+    await rebuildSearchIndex(index, {
+      listAll: async () => [monument("fresh", "Fresh"), monument("draft", "Draft", false)]
+    });
+    expect([...index.documents.keys()]).toEqual(["fresh"]);
   });
 });
