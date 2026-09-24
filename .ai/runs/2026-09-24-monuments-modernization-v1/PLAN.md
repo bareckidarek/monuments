@@ -35,6 +35,7 @@ Engine: `om-auto-create-pr-loop`
 | 7 | 7.4 | Complete security and release review | inline | done | f41afdd |
 | 7 | 7.5 | Fix final review runtime and import safety findings | inline | done | 8d77032, f367179, bccf498 |
 | 7 | 7.6 | Remove stale search documents during synchronization | inline | done | 1c04d06 |
+| 7 | 7.7 | Wire persisted image metadata into catalog details | inline | done | pending |
 
 ## Goal
 

@@ -41,7 +41,7 @@ export default async function MonumentPage({ params, searchParams }: { params: P
         {resolvedNotice}
         {monument.translation.address && <p><strong>{locale === "en" ? "Address" : "Adres"}:</strong> {monument.translation.address}</p>}
         {monument.translation.description && <p>{monument.translation.description}</p>}
-        <AccessibleGallery images={[]} locale={locale} />
+        <AccessibleGallery images={monument.images ?? []} locale={locale} />
         {monument.latitude != null && monument.longitude != null && (
           <p>{locale === "en" ? "Coordinates" : "Współrzędne"}: {monument.latitude}, {monument.longitude}</p>
         )}

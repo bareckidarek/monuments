@@ -8,7 +8,8 @@ const repository = new InMemoryMonumentRepository([
     slug: "alpha",
     region: "north",
     isPublished: true,
-    translations: [{ locale: "pl", name: "Alfa" }, { locale: "en", name: "Alpha" }]
+    translations: [{ locale: "pl", name: "Alfa" }, { locale: "en", name: "Alpha" }],
+    images: [{ id: "image-1", url: "/media/alpha.jpg", altTextPl: "Alfa" }]
   },
   {
     id: "2",
@@ -42,6 +43,11 @@ describe("catalog services", () => {
     expect((await getCatalogMonument(repository, { slug: " beta ", locale: "en" }))?.translation.name).toBe("Beta");
     expect(await getCatalogMonument(repository, { slug: "hidden", locale: "pl" })).toBeNull();
     expect(await getCatalogMonument(repository, { slug: " ", locale: "pl" })).toBeNull();
+  });
+
+  it("preserves persisted gallery data at the detail boundary", async () => {
+    const detail = await getCatalogMonument(repository, { slug: "alpha", locale: "pl" });
+    expect(detail?.images).toEqual([{ id: "image-1", url: "/media/alpha.jpg", altTextPl: "Alfa" }]);
   });
 
   it("streams pages in stable repository order", async () => {

@@ -8,6 +8,15 @@ export type Translation = {
   regionLabel?: string | null;
 };
 
+export type MonumentImage = {
+  id: string;
+  url: string;
+  altTextPl?: string | null;
+  altTextEn?: string | null;
+  captionPl?: string | null;
+  captionEn?: string | null;
+};
+
 export type Monument = {
   id: string;
   slug: string;
@@ -16,6 +25,7 @@ export type Monument = {
   longitude?: number | null;
   isPublished: boolean;
   translations: Translation[];
+  images?: MonumentImage[];
 };
 
 export type Page<T> = {

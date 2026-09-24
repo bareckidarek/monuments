@@ -15,7 +15,12 @@ export class PostgresMonumentRepository implements MonumentRepository, ViewportM
               count(*) OVER() AS total,
               json_agg(json_build_object('locale', t.locale, 'name', t.name,
                 'description', t.description, 'address', t.address,
-                'regionLabel', t.region_label)) AS translations
+                'regionLabel', t.region_label)) AS translations,
+              COALESCE((SELECT json_agg(json_build_object('id', i.id, 'url', '/media/' || i.storage_key,
+                'altTextPl', i.alt_text_pl, 'altTextEn', i.alt_text_en,
+                'captionPl', i.caption_pl, 'captionEn', i.caption_en)
+                ORDER BY i.sort_order) FROM monument_image i
+                WHERE i.monument_id = m.id AND i.processing_status = 'ready'), '[]') AS images
          FROM monument m
          JOIN monument_translation t ON t.monument_id = m.id
         WHERE m.is_published
@@ -38,7 +43,12 @@ export class PostgresMonumentRepository implements MonumentRepository, ViewportM
       `SELECT m.id, m.slug, m.latitude, m.longitude, m.is_published, m.region,
               json_agg(json_build_object('locale', t.locale, 'name', t.name,
                 'description', t.description, 'address', t.address,
-                'regionLabel', t.region_label)) AS translations
+                'regionLabel', t.region_label)) AS translations,
+              COALESCE((SELECT json_agg(json_build_object('id', i.id, 'url', '/media/' || i.storage_key,
+                'altTextPl', i.alt_text_pl, 'altTextEn', i.alt_text_en,
+                'captionPl', i.caption_pl, 'captionEn', i.caption_en)
+                ORDER BY i.sort_order) FROM monument_image i
+                WHERE i.monument_id = m.id AND i.processing_status = 'ready'), '[]') AS images
          FROM monument m
          JOIN monument_translation t ON t.monument_id = m.id
         WHERE m.slug = $1 AND m.is_published
@@ -85,6 +95,14 @@ function toMonument(row: Record<string, unknown>): Monument {
       description: translation.description,
       address: translation.address,
       regionLabel: translation.regionLabel
+    })),
+    images: (row.images as Array<Record<string, unknown>>).map((image) => ({
+      id: String(image.id),
+      url: String(image.url),
+      altTextPl: image.altTextPl === null ? null : String(image.altTextPl ?? ""),
+      altTextEn: image.altTextEn === null ? null : String(image.altTextEn ?? ""),
+      captionPl: image.captionPl === null ? null : String(image.captionPl ?? ""),
+      captionEn: image.captionEn === null ? null : String(image.captionEn ?? "")
     }))
   };
 }
