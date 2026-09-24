@@ -23,3 +23,8 @@
 - Added bounded region filtering to in-memory and PostgreSQL repositories.
 - Validation passed: typecheck, 18 tests, production build, and `git diff --check`.
 - Next step: Phase 3 Step 3.2.
+
+## 2026-09-24T15:46:00Z — om-auto-continue-pr-loop resume
+- Resumed by: @bareckidarek
+- Resume point: 3.2 (source: HANDOFF.md / Tasks table)
+- PR head SHA: 0187d6c
