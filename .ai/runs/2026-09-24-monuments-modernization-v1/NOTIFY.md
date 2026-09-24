@@ -17,3 +17,9 @@
 - Commit: `eceaa99`.
 - Branch push initially hit an SSH authentication error and a transient GitHub server error; the commit was subsequently pushed successfully.
 - Next step: Phase 3 Step 3.1.
+
+## 2026-09-24T17:42:00Z — Phase 3 Step 3.1 completed
+- Added catalog list/detail application services and paginated streaming.
+- Added bounded region filtering to in-memory and PostgreSQL repositories.
+- Validation passed: typecheck, 18 tests, production build, and `git diff --check`.
+- Next step: Phase 3 Step 3.2.

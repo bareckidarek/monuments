@@ -1,17 +1,17 @@
 # Handoff — 2026-09-24-monuments-modernization-v1
 
-**Last updated:** 2026-09-24T15:40:00Z
+**Last updated:** 2026-09-24T17:42:00Z
 **Branch:** feat/monuments-modernization-v1
 **PR:** https://github.com/bareckidarek/monuments/pull/1
-**Current phase/step:** Phase 3 Step 3.1
-**Last commit:** eceaa99 — feat(import): add synthetic source adapter fixture
+**Current phase/step:** Phase 3 Step 3.2
+**Last commit:** 2e26468 — feat(catalog): add paginated catalog services
 
 ## What just happened
-- Completed Phase 2 Step 2.4 with the synthetic source adapter, fixture, and transformation report.
-- The adapter test also verifies that legacy SQL is not executed or retained.
+- Completed Phase 3 Step 3.1 with bounded catalog list/detail services and paginated streaming.
+- Added region filtering, stable ordering, published-only reads, slug validation, and locale fallback coverage.
 
 ## Next concrete action
-- Implement paginated and streamed list/detail application services for Phase 3 Step 3.1.
+- Build accessible list and detail pages with SSR/ISR metadata for Phase 3 Step 3.2.
 
 ## Blockers / open questions
 - Legacy SQL dump and schema are not available; the canonical importer is the first implementation contract.
