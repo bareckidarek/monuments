@@ -20,7 +20,7 @@ Engine: `om-auto-create-pr-loop`
 | 3 | 3.1 | Implement paginated/streamed list and detail application services | group:C | done | 2e26468 |
 | 3 | 3.2 | Build accessible list and detail pages with SSR/ISR metadata | group:C | done | c58f44b |
 | 3 | 3.3 | Add stable canonical URL generation and change handling | inline | done | 4251ebf |
-| 4 | 4.1 | Define the Meilisearch document mapper and index settings | group:D | todo | — |
+| 4 | 4.1 | Define the Meilisearch document mapper and index settings | group:D | done | 4.1 pending |
 | 4 | 4.2 | Implement indexing after import and explicit rebuild commands | group:D | todo | — |
 | 4 | 4.3 | Connect search UI and filters to the catalog flow | inline | todo | — |
 | 5 | 5.1 | Implement the provider-neutral map adapter with Leaflet | group:E | todo | — |
