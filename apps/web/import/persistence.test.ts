@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { checksumForImport, type CanonicalImport } from "./schema";
-import { InMemoryImportDatabase } from "./persistence";
+import { assertBatchMatches, InMemoryImportDatabase } from "./persistence";
 
 function input(records: CanonicalImport["records"]): CanonicalImport {
   const base = { schemaVersion: "1.0" as const, sourceNamespace: "fixture", records };
@@ -9,6 +9,16 @@ function input(records: CanonicalImport["records"]): CanonicalImport {
 const record = (name = "A") => ({ externalId: "a", slug: "monument-a", translations: [{ locale: "pl" as const, name }] });
 
 describe("idempotent import persistence", () => {
+  it("accepts only the exact same input for an existing batch", () => {
+    const existing = { input_version: "1.0", source_namespace: "fixture", checksum: "same" };
+    expect(() => assertBatchMatches(existing, {
+      schemaVersion: "1.0", sourceNamespace: "fixture", checksum: "same"
+    })).not.toThrow();
+    expect(() => assertBatchMatches(existing, {
+      schemaVersion: "1.0", sourceNamespace: "fixture", checksum: "different"
+    })).toThrow("already exists with different input");
+  });
+
   it("inserts once and makes a repeated import a no-op", async () => {
     const db = new InMemoryImportDatabase();
     expect((await db.run(input([record()]))).importedCount).toBe(1);

@@ -14,6 +14,21 @@ export type ImportBatchReport = ValidationReport & {
 };
 
 type StoredRecord = { sourceNamespace: string; record: CanonicalRecord; hash: string };
+type ImportBatchIdentity = { input_version: string; source_namespace: string; checksum: string };
+export class ImportBatchConflictError extends Error {}
+
+export function assertBatchMatches(
+  existing: ImportBatchIdentity,
+  expected: { schemaVersion: string; sourceNamespace: string; checksum: string }
+): void {
+  if (
+    existing.input_version !== expected.schemaVersion ||
+    existing.source_namespace !== expected.sourceNamespace ||
+    existing.checksum !== expected.checksum
+  ) {
+    throw new ImportBatchConflictError(`Import batch already exists with different input`);
+  }
+}
 
 export class InMemoryImportDatabase {
   records = new Map<string, StoredRecord>();
@@ -75,6 +90,15 @@ export async function runImport(pool: Pool, input: unknown, batchId?: string): P
        ON CONFLICT (id) DO NOTHING`,
       [id, validation.validated.document.schemaVersion, validation.validated.document.sourceNamespace, validation.checksum, validation.validated.document.records.length]
     );
+    const batch = await client.query<ImportBatchIdentity>(
+      `SELECT input_version, source_namespace, checksum FROM import_batch WHERE id = $1`,
+      [id]
+    );
+    assertBatchMatches(batch.rows[0]!, {
+      schemaVersion: validation.validated.document.schemaVersion,
+      sourceNamespace: validation.validated.document.sourceNamespace,
+      checksum: validation.checksum
+    });
     await client.query("COMMIT");
     for (const [index, record] of validation.validated.document.records.entries()) {
       await client.query("BEGIN");
@@ -83,7 +107,17 @@ export async function runImport(pool: Pool, input: unknown, batchId?: string): P
         if (applied) await client.query(`UPDATE import_batch SET imported_count = imported_count + 1 WHERE id = $1`, [id]);
         await client.query("COMMIT");
       } catch (error) {
-        await client.query("ROLLBACK");
+        await client.query("ROLLBACK").catch(() => undefined);
+        if (error instanceof ImportBatchConflictError) throw error;
+        await client.query("BEGIN");
+        await client.query(
+          `UPDATE import_batch
+              SET status = CASE WHEN imported_count > 0 THEN 'partial' ELSE 'failed' END,
+                  error_count = error_count + 1
+            WHERE id = $1`,
+          [id]
+        );
+        await client.query("COMMIT");
         throw error;
       }
     }
