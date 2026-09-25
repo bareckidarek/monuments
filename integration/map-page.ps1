@@ -17,7 +17,7 @@ try {
   $Errors = Get-Content "$ArtifactDir/errors.json" -Raw
   if ($Errors.Contains('"errors":[{')) { throw 'Map page reported browser errors' }
   $Snapshot = Get-Content "$ArtifactDir/snapshot.json" -Raw
-  foreach ($Expected in @('Mapa zabytków', 'Brama Brandenburska', 'Zamek na Wawelu', 'Leaflet')) {
+  foreach ($Expected in @('Monuments', 'Map', 'Search', 'Brama Brandenburska', 'Zamek na Wawelu', 'Leaflet')) {
     if (-not $Snapshot.Contains($Expected)) { throw "Map page did not render expected content: $Expected" }
   }
   Write-Output "PASS map page: $BaseUrl/map"
