@@ -31,7 +31,7 @@ if grep -Fq '"errors":[{' "$ARTIFACT_DIR/errors.json"; then
   cat "$ARTIFACT_DIR/errors.json" >&2
   exit 1
 fi
-for expected in "Mapa zabytków" "Brama Brandenburska" "Zamek na Wawelu" "Leaflet"; do
+for expected in "Monuments" "Map" "Search" "Brama Brandenburska" "Zamek na Wawelu" "Leaflet"; do
   if ! grep -Fq "$expected" "$ARTIFACT_DIR/snapshot.json"; then
     echo "Map page did not render expected content: $expected" >&2
     exit 1

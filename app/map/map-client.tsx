@@ -122,10 +122,15 @@ export default function MapClient() {
 
   return (
     <main ref={pageElement} className="map-page">
-      <header className="map-header">
-        <Link href="/catalog?locale=pl">← Katalog</Link>
-        <h1>Mapa zabytków</h1>
-        <p>Przeglądaj zabytki i wybierz obiekt z mapy lub dolnego paska.</p>
+      <header className="map-navbar">
+        <div className="map-navbar-inner">
+          <Link className="map-brand" href="/catalog?locale=pl">Monuments</Link>
+          <Link className="map-nav-link map-nav-link-active" href="/map">Map</Link>
+          <form className="map-search" role="search" onSubmit={(event) => event.preventDefault()}>
+            <label className="map-search-label" htmlFor="map-search">Search</label>
+            <input id="map-search" type="search" placeholder="Search" />
+          </form>
+        </div>
       </header>
       <div ref={mapElement} className="map-canvas" aria-label="Interaktywna mapa zabytków" />
       <svg className="map-connections" aria-hidden="true">
@@ -162,11 +167,16 @@ export default function MapClient() {
             }}
             onBlur={() => setConnection((current) => (current?.marker.id === marker.id ? null : current))}
           >
+            <span
+              className="map-card-image"
+              role="img"
+              aria-label={`Przykładowe zdjęcie: ${marker.label}`}
+              style={{ backgroundImage: `url(https://picsum.photos/seed/monument-${marker.id}/320/150)` }}
+            />
             <span>{marker.label}</span>
           </Link>
         ))}
       </nav>
-      <p className="map-attribution">© OpenStreetMap contributors</p>
     </main>
   );
 }
